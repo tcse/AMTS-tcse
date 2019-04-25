@@ -1,4 +1,5 @@
 # AMTS-tcse
+![alt text](https://tcse-cms.com/uploads/posts/2019-04/1556203724_2019-04-25_17-47-02.png)
 Advanced Mobile Templates Switch (AMTS-tcse) расширенный переключатель мобильных шаблонов для DataLife Engine
 позволяющий вместо шаблона smartphone используемый для всех типов мобильных устройств 
 включать отдельные шаблоны для android, iphone или ipad.
