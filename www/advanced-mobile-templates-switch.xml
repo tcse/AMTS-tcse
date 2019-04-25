@@ -3,8 +3,8 @@
 	<name>advanced-mobile-templates-switch</name>
 	<description>Выбор шаблонов для iphone, ipad и android. 
 advanced mobile templates switch (AMTS-tcse) расширенный переключатель мобильных шаблонов</description>
-	<icon></icon>
-	<version>0.3</version>
+	<icon>engine/skins/images/amts.png</icon>
+	<version>0.3.1</version>
 	<dleversion>13</dleversion>
 	<versioncompare>greater</versioncompare>
 	<upgradeurl></upgradeurl>
