@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dleplugin>
-	<name>advanced-mobile-templates-switch</name>
-	<description>Выбор шаблонов для iphone, ipad и android. 
+  <name>advanced-mobile-templates-switch</name>
+  <description>Выбор шаблонов для iphone, ipad и android. 
 advanced mobile templates switch (AMTS-tcse) расширенный переключатель мобильных шаблонов</description>
-	<icon>engine/skins/images/amts.png</icon>
-	<version>0.4.2</version>
-	<dleversion>14</dleversion>
-	<versioncompare>greater</versioncompare>
-	<upgradeurl></upgradeurl>
-	<filedelete>0</filedelete>
+  <icon>engine/skins/images/amts.png</icon>
+  <version>0.4.2</version>
+  <dleversion>14</dleversion>
+  <versioncompare>greater</versioncompare>
+  <upgradeurl></upgradeurl>
+  <filedelete>0</filedelete>
   <mnotice>1</mnotice>
-	<mysqlinstall><![CDATA[]]></mysqlinstall>
-	<mysqlupgrade><![CDATA[]]></mysqlupgrade>
-	<mysqlenable><![CDATA[]]></mysqlenable>
-	<mysqldisable><![CDATA[]]></mysqldisable>
-	<mysqldelete><![CDATA[]]></mysqldelete>
+  <mysqlinstall><![CDATA[]]></mysqlinstall>
+  <mysqlupgrade><![CDATA[]]></mysqlupgrade>
+  <mysqlenable><![CDATA[]]></mysqlenable>
+  <mysqldisable><![CDATA[]]></mysqldisable>
+  <mysqldelete><![CDATA[]]></mysqldelete>
   <notice><![CDATA[
     Модуль AMTS-tcse работает только если в админке вашего сайта (Раздел: Настройка системы -> Настройка поддержки и работы с смартфонами) активирована функция "Включить автоматическую поддержку смартфонов".
 
@@ -29,10 +29,10 @@ advanced mobile templates switch (AMTS-tcse) расширенный перекл
 Официальная страница плагина [url]https://tcse-cms.com/works/1210-amts-tcse.html[/url] 
 
 ]]></notice>
-	<file name="engine/modules/functions.php">
-		<operation action="before">
-			<searchcode><![CDATA[?>]]></searchcode>
-			<replacecode><![CDATA[// MobTPL fix mobiledetect.net 2019
+  <file name="engine/modules/functions.php">
+    <operation action="before">
+      <searchcode><![CDATA[?>]]></searchcode>
+      <replacecode><![CDATA[// MobTPL fix mobiledetect.net 2019
   function check_device_std() {
     global $tpl;
     
@@ -55,11 +55,11 @@ advanced mobile templates switch (AMTS-tcse) расширенный перекл
     if ( $tpl->android ) return 'android';
   }
   // .MobTPL fix mobiledetect.net]]></replacecode>
-		</operation>
-	</file>
-	<file name="engine/init.php">
-		<operation action="replace">
-			<searchcode><![CDATA[if ( ($config['allow_smartphone'] AND !$_SESSION['mobile_disable'] AND $tpl->smartphone) OR $_SESSION['mobile_enable'] ) {
+    </operation>
+  </file>
+  <file name="engine/init.php">
+    <operation action="replace">
+      <searchcode><![CDATA[if ( ($config['allow_smartphone'] AND !$_SESSION['mobile_disable'] AND $tpl->smartphone) OR $_SESSION['mobile_enable'] ) {
 
   if ( @is_dir ( ROOT_DIR . '/templates/smartphone' ) ) {
 
@@ -71,7 +71,7 @@ advanced mobile templates switch (AMTS-tcse) расширенный перекл
   }
 
 }]]></searchcode>
-			<replacecode><![CDATA[// MobTPL fix mobiledetect.net
+      <replacecode><![CDATA[// MobTPL fix mobiledetect.net
   if ( $config['allow_smartphone'] ) {
       $smartphone_detected = $_SESSION['mobile_disable'] = $_SESSION['mobile_enable'] = false;
       $device=check_device_std();
@@ -93,17 +93,31 @@ advanced mobile templates switch (AMTS-tcse) расширенный перекл
       }
   }
   // .MobTPL fix mobiledetect.net]]></replacecode>
-		</operation>
-	</file>
+    </operation>
+  </file>
   <file name="engine/classes/templates.class.php">
     <operation action="after">
-      <searchcode><![CDATA[if ( $mobile_detect->isTablet() ) {
+      <searchcode><![CDATA[if ( $mobile_detect->isMobile() ) {
+      $this->smartphone = true;
+      $this->desktop = false;
+    }
+
+    if ( $mobile_detect->isTablet() ) {
       $this->smartphone = false;
       $this->desktop = false;
       $this->tablet = true;
     }]]></searchcode>
     <replacecode><![CDATA[
-      if ( $mobile_detect->isTablet() &&! $mobile_detect-> isAndroidOS () ) {
+      if ( $mobile_detect->isMobile() && $mobile_detect-> isiOS () ) {
+          $this->iphone = iphone;
+        }
+        elseif ( $mobile_detect->isMobile() ) {
+        $this->smartphone = false;
+      $this->desktop = false;
+      $this->tablet = true;
+      }
+
+if ( $mobile_detect->isTablet() &&! $mobile_detect-> isAndroidOS () ) {
           $this->ipad = true;
         }
         elseif ( $mobile_detect->isTablet() ) {
