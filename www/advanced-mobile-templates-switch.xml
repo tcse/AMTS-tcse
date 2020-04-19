@@ -4,7 +4,7 @@
   <description>Выбор шаблонов для iphone, ipad и android. 
 advanced mobile templates switch (AMTS-tcse) расширенный переключатель мобильных шаблонов</description>
   <icon>engine/skins/images/amts.png</icon>
-  <version>0.4.2</version>
+  <version>0.4.3</version>
   <dleversion>14</dleversion>
   <versioncompare>greater</versioncompare>
   <upgradeurl></upgradeurl>
@@ -108,18 +108,21 @@ advanced mobile templates switch (AMTS-tcse) расширенный перекл
       $this->tablet = true;
     }]]></searchcode>
     <replacecode><![CDATA[
+      // Если это телефон, и он на iOS - это iPhone
       if ( $mobile_detect->isMobile() && $mobile_detect-> isiOS () ) {
           $this->iphone = iphone;
         }
+        // Если это телефон 
         elseif ( $mobile_detect->isMobile() ) {
-        $this->smartphone = false;
-      $this->desktop = false;
-      $this->tablet = true;
+        $this->smartphone = true;
+        $this->desktop = false;
       }
 
+// Если это планшет, и он на iOS - это iPad (Код, который будет выполнен, если условие истинно)
 if ( $mobile_detect->isTablet() &&! $mobile_detect-> isAndroidOS () ) {
           $this->ipad = true;
         }
+        // Если это планшет (Код, который будет выполнен, если условие истинно)
         elseif ( $mobile_detect->isTablet() ) {
         $this->smartphone = false;
         $this->desktop = false;
