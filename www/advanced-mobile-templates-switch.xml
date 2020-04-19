@@ -4,7 +4,7 @@
 	<description>Выбор шаблонов для iphone, ipad и android. 
 advanced mobile templates switch (AMTS-tcse) расширенный переключатель мобильных шаблонов</description>
 	<icon>engine/skins/images/amts.png</icon>
-	<version>0.4.1</version>
+	<version>0.4.2</version>
 	<dleversion>14</dleversion>
 	<versioncompare>greater</versioncompare>
 	<upgradeurl></upgradeurl>
@@ -95,4 +95,24 @@ advanced mobile templates switch (AMTS-tcse) расширенный перекл
   // .MobTPL fix mobiledetect.net]]></replacecode>
 		</operation>
 	</file>
+  <file name="engine/classes/templates.class.php">
+    <operation action="after">
+      <searchcode><![CDATA[if ( $mobile_detect->isTablet() ) {
+      $this->smartphone = false;
+      $this->desktop = false;
+      $this->tablet = true;
+    }]]></searchcode>
+    <replacecode><![CDATA[
+      if ( $mobile_detect->isTablet() &&! $mobile_detect-> isAndroidOS () ) {
+          $this->ipad = true;
+        }
+        elseif ( $mobile_detect->isTablet() ) {
+        $this->smartphone = false;
+        $this->desktop = false;
+        $this->tablet = true;
+      }
+    ]]></replacecode>
+    </operation>
+
+  </file>
 </dleplugin>
