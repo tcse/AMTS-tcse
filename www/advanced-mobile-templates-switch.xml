@@ -4,7 +4,7 @@
   <description>Выбор шаблонов для iphone, ipad и android. 
 advanced mobile templates switch (AMTS-tcse) расширенный переключатель мобильных шаблонов</description>
   <icon>engine/skins/images/amts.png</icon>
-  <version>0.4.3</version>
+  <version>0.5.6</version>
   <dleversion>14</dleversion>
   <versioncompare>greater</versioncompare>
   <upgradeurl></upgradeurl>
@@ -17,6 +17,15 @@ advanced mobile templates switch (AMTS-tcse) расширенный перекл
   <mysqldelete><![CDATA[]]></mysqldelete>
   <notice><![CDATA[
     Модуль AMTS-tcse работает только если в админке вашего сайта (Раздел: Настройка системы -> Настройка поддержки и работы с смартфонами) активирована функция "Включить автоматическую поддержку смартфонов".
+
+    Дополнительно в сборку входят функции плагина browse-select - поддержка тегов 
+[code]
+[chrome] текст [/chrome] - отображает содержимое, если веб-браузер Chrome
+[not-chrome] текст [/not-chrome] - отображает содержимое, если веб-браузер не Chrome
+
+[safari] текст [/safari] - отображает содержимое, если веб-браузер Mobile Safari
+[not-safari] текст [/not-safari] - отображает содержимое, если веб-браузер не Mobile Safari
+[/code]
 
     Принудительное переключение шаблона - добавить в ваши tpl файлы следующий html код 
 
@@ -130,6 +139,130 @@ if ( $mobile_detect->isTablet() &&! $mobile_detect-> isAndroidOS () ) {
       }
     ]]></replacecode>
     </operation>
+    <operation action="after">
+      <searchcode><![CDATA[if( $mobile_detect->isAndroidOS() ){
+      $this->android = true;
+    }]]></searchcode>
+      <replacecode><![CDATA[
+        if( $mobile_detect->isChrome() ){
+      $this->chrome = true;
+    }
+    if( $mobile_detect->isSafari() ){
+      $this->safari = true;
+    }
+    ]]></replacecode>
+    </operation>
+    <operation action="after">
+      <searchcode><![CDATA[if (strpos ( $this->template, "[android]" ) !== false) {
+      
+      if($this->android) {
+        
+        $this->template = str_replace( '[android]', "", $this->template );
+        $this->template = str_replace( '[/android]', "", $this->template );
+        $this->template = preg_replace( "#\[not-android\](.+?)\[/not-android\]#is", "", $this->template );
+        
+      } else {
+        
+        $this->template = str_replace( '[not-android]', "", $this->template );
+        $this->template = str_replace( '[/not-android]', "", $this->template );
+        $this->template = preg_replace( "#\[android\](.+?)\[/android\]#is", "", $this->template );
+        
+      }
+      
+    }]]></searchcode>
+      <replacecode><![CDATA[
+        if (strpos ( $this->template, "[chrome]" ) !== false) {
+      
+      if($this->chrome) {
+        
+        $this->template = str_replace( '[chrome]', "", $this->template );
+        $this->template = str_replace( '[/chrome]', "", $this->template );
+        $this->template = preg_replace( "#\[not-chrome\](.+?)\[/not-chrome\]#is", "", $this->template );
+        
+      } else {
+        
+        $this->template = str_replace( '[not-chrome]', "", $this->template );
+        $this->template = str_replace( '[/not-chrome]', "", $this->template );
+        $this->template = preg_replace( "#\[chrome\](.+?)\[/chrome\]#is", "", $this->template );
+        
+      }
+      
+    }
+    if (strpos ( $this->template, "[safari]" ) !== false) {
+        
+        if($this->safari) {
+          
+          $this->template = str_replace( '[safari]', "", $this->template );
+          $this->template = str_replace( '[/safari]', "", $this->template );
+          $this->template = preg_replace( "#\[not-safari\](.+?)\[/not-safari\]#is", "", $this->template );
+          
+        } else {
+          
+          $this->template = str_replace( '[not-safari]', "", $this->template );
+          $this->template = str_replace( '[/not-safari]', "", $this->template );
+          $this->template = preg_replace( "#\[safari\](.+?)\[/safari\]#is", "", $this->template );
+          
+        }
+        
+      }
+    ]]></replacecode>
+    </operation>
 
+    <operation action="after">
+      <searchcode><![CDATA[if (strpos ( $template, "[android]" ) !== false) {
+      
+      if($this->android) {
+        
+        $template = str_replace( '[android]', "", $template );
+        $template = str_replace( '[/android]', "", $template );
+        $template = preg_replace( "#\[not-android\](.+?)\[/not-android\]#is", "", $template );
+        
+      } else {
+        
+        $template = str_replace( '[not-android]', "", $template );
+        $template = str_replace( '[/not-android]', "", $template );
+        $template = preg_replace( "#\[android\](.+?)\[/android\]#is", "", $template );
+        
+      }
+      
+    }]]></searchcode>
+      <replacecode><![CDATA[
+        if (strpos ( $template, "[chrome]" ) !== false) {
+        
+        if($this->chrome) {
+          
+          $template = str_replace( '[chrome]', "", $template );
+          $template = str_replace( '[/chrome]', "", $template );
+          $template = preg_replace( "#\[not-chrome\](.+?)\[/not-chrome\]#is", "", $template );
+          
+        } else {
+          
+          $template = str_replace( '[not-chrome]', "", $template );
+          $template = str_replace( '[/not-chrome]', "", $template );
+          $template = preg_replace( "#\[chrome\](.+?)\[/chrome\]#is", "", $template );
+          
+        }
+        
+      }
+      
+  if (strpos ( $template, "[safari]" ) !== false) {
+        
+        if($this->safari) {
+          
+          $template = str_replace( '[safari]', "", $template );
+          $template = str_replace( '[/safari]', "", $template );
+          $template = preg_replace( "#\[not-safari\](.+?)\[/not-safari\]#is", "", $template );
+          
+        } else {
+          
+          $template = str_replace( '[not-safari]', "", $template );
+          $template = str_replace( '[/not-safari]', "", $template );
+          $template = preg_replace( "#\[safari\](.+?)\[/safari\]#is", "", $template );
+          
+        }
+        
+    }
+    ]]></replacecode>
+    </operation>
   </file>
 </dleplugin>
