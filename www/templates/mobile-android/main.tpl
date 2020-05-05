@@ -28,8 +28,17 @@
                         <p class="text-center" >
                         	Пожалуйста, замените содержимое демо-версии на свой вариант шаблона.
                         </p>
-
-                        
+                        <h4>Ваше устройство</h4>
+                        <p style="margin-bottom: 30px;">
+                          <b>DLE определил как</b>: 
+                          [android] <span style="color: green;">android</span> [/android]
+                          [ios] <span style="color: green;">ios</span> [/ios]
+                          [smartphone] <span style="color: green;">smartphone</span> [/smartphone]
+                          [tablet] <span style="color: green;">tablet</span> [/tablet]
+                          [desktop] <span style="color: green;">desktop</span> [/desktop]
+                          [chrome] <span style="color: green;">chrome</span> [/chrome]
+                          [safari] <span style="color: green;">safari</span> [/safari]
+                        </p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6">
