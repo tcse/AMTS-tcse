@@ -4,8 +4,8 @@
   <description>Выбор шаблонов для iphone, ipad и android. 
 advanced mobile templates switch (AMTS-tcse) расширенный переключатель мобильных шаблонов</description>
   <icon>engine/skins/images/amts.png</icon>
-  <version>0.5.7</version>
-  <dleversion>14.1</dleversion>
+  <version>0.5.8</version>
+  <dleversion>14.2</dleversion>
   <versioncompare>greater</versioncompare>
   <upgradeurl></upgradeurl>
   <filedelete>0</filedelete>
@@ -40,7 +40,7 @@ advanced mobile templates switch (AMTS-tcse) расширенный перекл
 ]]></notice>
   <file name="engine/modules/functions.php">
     <operation action="before">
-      <searchcode><![CDATA[function if_check($matches){]]></searchcode>
+      <searchcode><![CDATA[if (!function_exists('password_hash')) {]]></searchcode>
       <replacecode><![CDATA[// MobTPL fix mobiledetect.net 2019
   function check_device_std() {
     global $tpl;
@@ -153,18 +153,18 @@ if ( $mobile_detect->isTablet() &&! $mobile_detect-> isAndroidOS () ) {
     ]]></replacecode>
     </operation>
     <operation action="after">
-      <searchcode><![CDATA[if (strpos ( $this->template, "[android]" ) !== false) {
+      <searchcode><![CDATA[if (stripos ( $this->template, "android]" ) !== false) {
       
       if($this->android) {
         
-        $this->template = str_replace( '[android]', "", $this->template );
-        $this->template = str_replace( '[/android]', "", $this->template );
+        $this->template = str_ireplace( '[android]', "", $this->template );
+        $this->template = str_ireplace( '[/android]', "", $this->template );
         $this->template = preg_replace( "#\[not-android\](.+?)\[/not-android\]#is", "", $this->template );
         
       } else {
         
-        $this->template = str_replace( '[not-android]', "", $this->template );
-        $this->template = str_replace( '[/not-android]', "", $this->template );
+        $this->template = str_ireplace( '[not-android]', "", $this->template );
+        $this->template = str_ireplace( '[/not-android]', "", $this->template );
         $this->template = preg_replace( "#\[android\](.+?)\[/android\]#is", "", $this->template );
         
       }
@@ -205,63 +205,6 @@ if ( $mobile_detect->isTablet() &&! $mobile_detect-> isAndroidOS () ) {
         }
         
       }
-    ]]></replacecode>
-    </operation>
-
-    <operation action="after">
-      <searchcode><![CDATA[if (strpos ( $template, "[android]" ) !== false) {
-      
-      if($this->android) {
-        
-        $template = str_replace( '[android]', "", $template );
-        $template = str_replace( '[/android]', "", $template );
-        $template = preg_replace( "#\[not-android\](.+?)\[/not-android\]#is", "", $template );
-        
-      } else {
-        
-        $template = str_replace( '[not-android]', "", $template );
-        $template = str_replace( '[/not-android]', "", $template );
-        $template = preg_replace( "#\[android\](.+?)\[/android\]#is", "", $template );
-        
-      }
-      
-    }]]></searchcode>
-      <replacecode><![CDATA[
-        if (strpos ( $template, "[chrome]" ) !== false) {
-        
-        if($this->chrome) {
-          
-          $template = str_replace( '[chrome]', "", $template );
-          $template = str_replace( '[/chrome]', "", $template );
-          $template = preg_replace( "#\[not-chrome\](.+?)\[/not-chrome\]#is", "", $template );
-          
-        } else {
-          
-          $template = str_replace( '[not-chrome]', "", $template );
-          $template = str_replace( '[/not-chrome]', "", $template );
-          $template = preg_replace( "#\[chrome\](.+?)\[/chrome\]#is", "", $template );
-          
-        }
-        
-      }
-      
-  if (strpos ( $template, "[safari]" ) !== false) {
-        
-        if($this->safari) {
-          
-          $template = str_replace( '[safari]', "", $template );
-          $template = str_replace( '[/safari]', "", $template );
-          $template = preg_replace( "#\[not-safari\](.+?)\[/not-safari\]#is", "", $template );
-          
-        } else {
-          
-          $template = str_replace( '[not-safari]', "", $template );
-          $template = str_replace( '[/not-safari]', "", $template );
-          $template = preg_replace( "#\[safari\](.+?)\[/safari\]#is", "", $template );
-          
-        }
-        
-    }
     ]]></replacecode>
     </operation>
   </file>
